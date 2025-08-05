@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <title>Intern-Login</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body {
+        font-family: 'Exo 2', sans-serif;
+        min-height: 100vh;
+        background-image: linear-gradient(to right,#FFCC00, #FFBC4C,#FFDE63,#FEFFC4);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    header {
+        width: 100%;
+        background: transparent;
+        margin-bottom: 20px;
+        position: relative;
+    }
+    .nav-header {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        position: relative;
+        width: 100%;
+        padding: 0 0 0 10px;
+        min-height: 60px;
+    }
+    .nav-header h1 {
+        flex: 1;
+        text-align: center;
+        margin: 0;
+        font-size: 2.2rem;
+        letter-spacing: 2px;
+        color: #021024;
+    }
+    nav {
+        width: 100%;
+        position: relative;
+    }
+    .nav-toggle {
+        display: none;
+    }
+    .nav-toggle-label {
+        position: relative;
+        top: 0;
+        right: 0;
+        margin-right: 10px;
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        z-index: 2;
+    }
+    .nav-toggle-label span,
+    .nav-toggle-label span:before,
+    .nav-toggle-label span:after {
+        display: block;
+        background: #021024;
+        height: 4px;
+        width: 30px;
+        border-radius: 2px;
+        position: absolute;
+        transition: all 0.3s;
+    }
+    .nav-toggle-label span {
+        position: relative;
+    }
+    .nav-toggle-label span:before {
+        content: '';
+        position: absolute;
+        top: -10px;
+    }
+    .nav-toggle-label span:after {
+        content: '';
+        position: absolute;
+        top: 10px;
+    }
+    nav ul {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 30px;
+        margin-bottom: 10px;
+        list-style: none;
+        padding: 0;
+        transition: max-height 0.3s;
+    }
+    nav ul li a {
+        text-decoration: none;
+        color: #021024;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: color 0.2s;
+    }
+    nav ul li a:hover {
+        color: #4CAF50;
+    }
+    .container {
+        width: 100vw;
+        min-height: 70vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .login {
+        width: 350px;
+        background: rgba(255,255,255,0.85);
+        border-radius: 1em;
+        box-shadow: 0 8px 32px 0 rgba(2,16,36,0.18);
+        padding: 32px 28px 24px 28px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border: 1.5px solid #5483b3;
+        backdrop-filter: blur(8px);
+    }
+    label {
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: #021024;
+        margin-bottom: 6px;
+        margin-top: 12px;
+        align-self: flex-start;
+    }
+    #Email, #Password {
+        width: 100%;
+        padding: 12px 14px;
+        margin-bottom: 10px;
+        border: 1.5px solid #5483b3;
+        border-radius: 8px;
+        font-size: 1rem;
+        background: #fefeffe3;
+        color: #021024;
+        outline: none;
+        transition: border 0.2s;
+    }
+    #Email:focus, #Password:focus {
+        border: 1.5px solid #4CAF50;
+        background: #e6f7ee;
+    }
+    .show-password {
+        width: 100%;
+        margin-bottom: 10px;
+        font-size: 0.95rem;
+        color: #021024;
+        cursor: pointer;
+        user-select: none;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .error-message {
+        color: #e53935;
+        font-size: 0.98rem;
+        margin-bottom: 10px;
+        text-align: center;
+        width: 100%;
+    }
+    #Login {
+        width: 100%;
+        height: 38px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-top: 10px;
+        margin-bottom: 8px;
+        transition: background 0.2s;
+        box-shadow: 0 2px 8px rgba(81,210,30,0.08);
+    }
+    .login p {
+        margin-top: 10px;
+        font-size: 1rem;
+        color: #021024;
+    }
+    .login p a {
+        color: #5483b3;
+        text-decoration: underline;
+        font-weight: 500;
+    }
+    .footer {
+        text-align: center;
+        margin-top: 30px;
+        color: #021024;
+        font-size: 1rem;
+        letter-spacing: 1px;
+    }
+    @media (max-width: 600px) {
+        .container {
+            min-height: 60vh;
+        }
+        .login {
+            width: 95vw;
+            min-width: 0;
+            padding: 18px 6vw 18px 6vw;
+        }
+        .nav-header {
+            padding: 0;
+            min-height: 60px;
+        }
+        .nav-header h1 {
+            font-size: 1.1rem;
+            padding-left: 0;
+            padding-right: 0;
+        }
+        .nav-toggle-label {
+            display: flex;
+            position: relative;
+            margin-right: 0;
+        }
+        nav ul {
+            flex-direction: column;
+            background: #fffbe6;
+            position: absolute;
+            top: 60px;
+            right: 0;
+            width: 200px;
+            max-height: 0;
+            overflow: hidden;
+            box-shadow: 0 8px 32px 0 rgba(2,16,36,0.18);
+            border-radius: 0 0 10px 10px;
+            z-index: 1;
+            margin-bottom: 0;
+            transition: max-height 0.3s;
+        }
+        .nav-toggle:checked ~ ul {
+            max-height: 300px;
+            padding: 10px 0;
+        }
+    }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+            <label for="nav-toggle" class="nav-toggle-label">
+                <span></span>
+            </label>
+            <div class="nav-header">
+                <h1>She Can Foundation</h1>
+            </div>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/donate">Donate</a></li>
+                <li><a href="/register">Register</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="login">
+            <form action="/login" method="post">
+                <label for="Email">Email:</label>
+                <input type="email" placeholder="Enter your email" name="email" id="Email" required>
+                <label for="Password">Password:</label>
+                <input type="password" placeholder="Enter your password" name="password" id="Password" required>
+                <div class="show-password">
+                    <input type="checkbox" id="showPass"> Show Password
+                </div>
+                <div class="error-message" id="errorMsg"></div>
+                <input type="submit" value="Login" id="Login">
+            </form>
+            <p>Don't have an account? <a href="/register">Register</a></p>
+        </div>
+    </div>
+    <div class="footer">
+        <p>&copy; 2025 She Can Foundation</p>
+    </div>
+    <script>
+        // Show/hide password
+        document.getElementById('showPass').addEventListener('change', function() {
+            const passInput = document.getElementById('Password');
+            passInput.type = this.checked ? 'text' : 'password';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background-image: linear-gradient(to right,#FFCC00, #FFBC4C,#FFDE63,#FEFFC4);
+            overflow: hidden;
+        }
+        header {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 24px 16px 24px;
+            position: relative;
+        }
+        header::before{
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            background-color: #021024;
+            height: 2px;
+            border-radius: 1em;
+
+        }
+        .brand {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #021024;
+            letter-spacing: 2px;
+        }
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+        .user-name {
+            font-size: 1.1rem;
+            color: #021024;
+            margin-right: 10px;
+        }
+        .logout {
+            text-decoration: none;
+            color: #fff;
+            background: #e53935;
+            padding: 6px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .logout:hover {
+            background: #b71c1c;
+        }
+        h2 {
+            font-size: 32px;
+            text-align: center;
+            color: black;
+            letter-spacing: 2px;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 40px;
+            background-color: transparent;
+        }
+        .details {
+            background: rgba(255,255,255,0.65);
+            border-radius: 1em;
+            box-shadow: 0 8px 32px 0 rgba(2,16,36,0.10);
+            padding: 32px 28px 24px 28px;
+            max-width: 600px;
+            width: 100%;
+            color: black;
+            height: 400px;
+            backdrop-filter: blur(100px);
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #021024;
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+        a{
+            text-decoration: none;
+            color: #021024;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="brand">She Can Foundation</div>
+        <div class="user-actions">
+            <span class="user-name"><%= user.name %></span>
+            <a href="/leaderboard" id="leader">LeaderBoard</a>
+            <a href="/logout" class="logout">Logout</a>
+        </div>
+    </header>
+
+    <h2>Welcome <%= user.name %></h2>
+    <div class="container">
+        <div class="details">
+            <article>
+                Hello Mr/Mrs. <%= user.name %>, we are glad to see you here. You are a part of our She Can Foundation. You were supposed to 
+                rise funds to support the education of a girl child.
+            </article>
+            <p>This is your referral code, please use this referral code to raise the funds</p>
+            <strong>Referral code: <%= user.referal_code %></strong>
+            <p>Every contribution, no matter how small, can spark a wave of change for girls and women everywhere. 
+                By raising funds to support initiatives that empower and educate, we can help break the cycle of poverty and discrimination. 
+                Your efforts can provide essential resources, such as scholarships, health services, and vocational training, that enable young girls and women to realize their dreams and potential. 
+                Together, we can create a brighter future, ensuring that every girl child has the opportunity to thrive and every woman can live her life with dignity and purpose. 
+                Join us in this vital mission and make a difference today!</p>
+            <div class="fund">
+            <h3>Current Fund</h3>
+            <p>Funds raised by using your referal code.</p>   
+            <p>Current fund raised: ₹ <%= total_donations %></p>
+        </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <p>&copy; 2025 She Can Foundation</p>
+    </footer>

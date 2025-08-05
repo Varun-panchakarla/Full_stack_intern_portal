@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donate</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background-image: linear-gradient(120deg, #FFCC00 0%, #FFBC4C 50%, #FFDE63 80%, #FEFFC4 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        header {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 24px;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        header::before {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            background-color: #021024;
+            height: 2px;
+            border-radius: 1em;
+        }
+        .brand {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #021024;
+            letter-spacing: 2px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 30px auto 0 auto;
+            padding: 28px 24px;
+            background: rgba(255, 255, 255, 0.445);
+            backdrop-filter: blur(10px);
+            border-radius: 1.2em;
+            box-shadow: 0 6px 32px rgba(0,0,0,0.10);
+            max-width: 420px;
+            width: 95%;
+            transition: box-shadow 0.2s;
+        }
+        .container:hover {
+            box-shadow: 0 8px 40px rgba(0,0,0,0.15);
+        }
+        .donate h1 {
+            margin-bottom: 24px;
+            color: #021024;
+            font-size: 2.2rem;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        form {
+            width: 100%;
+        }
+        form label {
+            font-weight: 600;
+            color: #021024;
+            margin-bottom: 6px;
+            display: block;
+            letter-spacing: 0.5px;
+        }
+        #name, #email, #amount, #referal {
+            padding: 12px 14px;
+            border: 1.5px solid #ddd;
+            border-radius: 0.6em;
+            width: 100%;
+            font-size: 1.05em;
+            margin-bottom: 18px;
+            background: #ffffff;
+            overflow: hidden;
+            transition: border 0.2s, box-shadow 0.2s;
+            box-shadow: 0 1px 4px rgba(255,188,76,0.05);
+        }
+        #name:focus, #email:focus, #amount:focus, #referal:focus {
+            border: 1.5px solid #FFBC4C;
+            outline: none;
+            box-shadow: 0 2px 8px rgba(255,188,76,0.12);
+        }
+        #donate {
+            padding: 14px;
+            border: none;
+            border-radius: 0.6em;
+            width: 100%;
+            font-size: 1.15em;
+            background-color: #021024;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: background 0.2s, color 0.2s, transform 0.1s;
+            margin-top: 8px;
+            box-shadow: 0 2px 8px rgba(2,16,36,0.08);
+        }
+        #donate:hover, #donate:focus {
+            background: linear-gradient(90deg, #FFBC4C 60%, #021024 100%);
+            color: #021024;
+            transform: translateY(-2px) scale(1.03);
+        }
+        .card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 32px 24px;
+            border-radius: 1.2em;
+            font-size: 1.15em;
+            background-color: #fff;
+            box-shadow: 0 6px 32px rgba(0,0,0,0.12);
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 320px;
+            max-width: 95vw;
+            z-index: 10;
+            text-align: center;
+            animation: fadeIn 0.5s;
+        }
+        .card h1 {
+            color: #FFBC4C;
+            margin-bottom: 14px;
+            font-size: 2rem;
+        }
+        .card p {
+            color: #021024;
+            font-size: 1.1em;
+            margin-top: 0;
+        }
+        .hide {
+            display: none;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translate(-50%, -60%);}
+            to { opacity: 1; transform: translate(-50%, -50%);}
+        }
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .container, .card {
+                padding: 18px 8px;
+                max-width: 98vw;
+                min-width: unset;
+            }
+            .brand {
+                font-size: 1.3rem;
+            }
+            .donate h1, .card h1 {
+                font-size: 1.3rem;
+            }
+            header {
+                padding: 10px 8px;
+            }
+            #donate {
+                font-size: 1em;
+            }
+        }
+        @media (max-width: 400px) {
+            .container, .card {
+                padding: 8px 2px;
+            }
+            .donate h1, .card h1 {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="brand">She Can Foundation</div>
+    </header>
+    <div class="container">
+        <div class="donate">
+            <h1>Donate here</h1>
+            <form id="donateForm" action="/donate" method="post">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                <label for="amount">Amount:</label>
+                <input type="number" id="amount" name="amount" placeholder="Enter the amount" required>
+                <label for="referal_code">Referal code:</label>
+                <input type="text" name="referal_code" placeholder="Enter referal code" id="referal" required>
+                <input type="submit" value="Donate" id="donate">
+            </form>
+        </div>
+    </div>
+    <div class="card hide" id="thankYouCard">
+        <h1>Thank you for the donation🙏</h1>
+        <p>Every penny that you donated will be used to Save, Study, and Empower the girls in our community.</p>
+    </div>
+    <script>
+       // document.getElementById('donateForm').addEventListener('submit', function(event) {
+         //   event.preventDefault();
+         //   document.querySelector('.container').style.display = 'none';
+         //   document.getElementById('thankYouCard').classList.remove('hide');
+            // Optionally, send the form data via AJAX here if you want to process it server-side
+      //  });
+    </script>

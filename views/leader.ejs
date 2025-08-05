@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeaderBoard</title>
+    <style>
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background-image: linear-gradient(to right,#FFCC00, #FFBC4C,#FFDE63,#FEFFC4);
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            position: relative;
+        }
+        header::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #021024;
+            height: 2px;
+            border-radius: 1em;
+        }
+        .brand {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #021024;
+        }
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+        .user-name {
+            font-size: 1.1rem;
+            color: #021024;
+            margin-right: 12px;
+        }
+        .logout {
+            text-decoration: none;
+            color: #fff;
+            background: #e53935;
+            padding: 6px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .logout:hover {
+            background: #b71c1c;
+        }
+        .container {
+            padding: 32px;
+        }
+        .leaderboard {
+            background: #ffffffea;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            backdrop-filter: blur(8px);
+        }
+        .leaderboard h2 {
+            margin-bottom: 20px;
+            color: #021024;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #ccc;
+        }
+        th {
+            background-color: #021024;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="brand">She Can Foundation</div>
+        <div class="user-actions">
+            <span class="user-name"><%= user.name %></span>
+            <a href="/logout" class="logout">Logout</a>
+        </div>
+    </header>
+    <div class="container">
+        <div class="leaderboard">
+            <h2>Leaderboard</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Username</th>
+                        <th>Amount Raised</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for (var i = 0; i < leaderboard.length; i++) { %>
+                        <tr>
+                            <td><%= i + 1 %></td>
+                            <td><%= leaderboard[i].name %></td>
+                            <td>₹<%= leaderboard[i].total_raised %></td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
