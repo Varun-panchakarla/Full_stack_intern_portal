@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import session from 'express-session';
 import pg from 'pg';
 import dotenv from 'dotenv';
+
 dotenv.config();
 
 const { Pool } = pg;
@@ -12,11 +13,13 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const port = process.env.PORT || 3000;
 
+// Middleware
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'))); // for serving static assets (images, css, etc.)
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+// PostgreSQL pool
 const pool = new Pool({
     host: process.env.PGHOST,
     user: process.env.PGUSER,
@@ -26,26 +29,28 @@ const pool = new Pool({
     ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
 });
 
+// Session middleware with fallback secret
 app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    maxAge: 1000 * 60 * 60 * 6,
-    sameSite: 'lax'
-  }
+    secret: process.env.SESSION_SECRET || 'fallback_secret', // fallback for Render crash
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 6, // 6 hours
+        sameSite: 'lax'
+    }
 }));
 
+// Routes
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(path.join(__dirname, 'index.html')); // file in root
 });
 
 app.get('/register', (req, res) => {
-    res.sendFile(path.join(__dirname, 'register.html'));
+    res.sendFile(path.join(__dirname, 'register.html')); // file in root
 });
 
 app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, 'login.html'));
+    res.sendFile(path.join(__dirname, 'login.html')); // file in root
 });
 
 app.get('/donate', (req, res) => {
@@ -73,13 +78,17 @@ app.get('/leaderboard', async (req, res) => {
 
 app.post('/register', async (req, res) => {
     const { name, Phone, email, password, confirm_password } = req.body;
+
     if (!email.includes('@') || !email.includes('.')) {
         return res.send('Invalid email');
     }
+
     if (password !== confirm_password) {
         return res.send('Passwords do not match');
     }
+
     const referal_code = `${name}2025`;
+
     try {
         await pool.query(
             'INSERT INTO users (name, phone, email, password, referal_code) VALUES ($1, $2, $3, $4, $5)',
@@ -96,14 +105,17 @@ app.post('/register', async (req, res) => {
 
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
+
     if (!email || !password) {
         return res.send('Please enter both email and password.');
     }
+
     try {
         const result = await pool.query(
             'SELECT * FROM users WHERE email = $1 AND password = $2',
             [email, password]
         );
+
         if (result.rows.length > 0) {
             req.session.user = result.rows[0];
             res.redirect('/profile');
@@ -119,14 +131,21 @@ app.get('/profile', async (req, res) => {
     if (!req.session.user) {
         return res.redirect('/login');
     }
+
     const referal_code = req.session.user.referal_code;
+
     try {
         const result = await pool.query(
             'SELECT SUM(amount) AS total FROM donations WHERE referal_code = $1',
             [referal_code]
         );
+
         const total_donations = result.rows[0].total || 0;
-        res.render('profile', { user: req.session.user, total_donations });
+
+        res.render('profile', {
+            user: req.session.user,
+            total_donations
+        });
     } catch (err) {
         res.send('Database error: ' + err.message);
     }
@@ -135,6 +154,7 @@ app.get('/profile', async (req, res) => {
 app.post('/donate', async (req, res) => {
     const { name, email, amount, referal_code } = req.body;
     const date = new Date().toISOString().slice(0, 19).replace('T', ' ');
+
     try {
         await pool.query(
             'INSERT INTO donations (name, email, amount, referal_code, date) VALUES ($1, $2, $3, $4, $5)',
@@ -150,8 +170,13 @@ app.post('/donate', async (req, res) => {
     }
 });
 
-app.get('/logout', (req, res) => req.session.destroy(() => res.redirect('/login')));
+app.get('/logout', (req, res) => {
+    req.session.destroy(() => {
+        res.redirect('/login');
+    });
+});
 
+// Start server
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
