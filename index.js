@@ -29,6 +29,7 @@ const pool = new Pool({
     ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
 });
 
+
 // Session middleware with fallback secret
 app.use(session({
     secret: process.env.SESSION_SECRET || 'fallback_secret', // fallback for Render crash
